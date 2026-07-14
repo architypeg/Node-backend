@@ -6,15 +6,17 @@ exports.getAddProduct= (req, res, next) => {
 
 exports.postAddProduct = (req, res, next) => {
     const product = new Product(req.body.title)
+    product.save();
     res.redirect('/');  // Aside Note: Both of the routes can have the same name if the type of the request is different one is post and another is get.
 };
 
 exports.getProducts = (req, res, next) => {
-    const products = Product.fetchAll();
-    res.render('shop', {
+    Product.fetchAll((products) =>{
+        res.render('shop', {
         prods: products, 
         pageTitle: 'Shop', 
-        path: '/',
-        
+        path: '/',  
     });
+    });
+    
 }
